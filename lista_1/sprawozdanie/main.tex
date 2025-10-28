@@ -1,0 +1,105 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\title{Sprawozdanie Lista 1}
+\author{Jakub Okła 287337}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Wprowadzenie}
+Celem ćwiczenia była analiza działania trzech klasycznych algorytmów sortowania: Insertion Sort, Merge Sort oraz Heap Sort, a także ich zmodyfikowanych wersji. W każdej implementacji dodane zostały liczniki porównań oraz przypisań, co pozwoliło porównać koszty operacyjne algorytmów dla danych o różnych wielkościach.
+
+Badane algorytmy reprezentują różne sposoby sortowania: sortowanie przez wstawianie (INSERTION\_SORT), sortowanie przez scalanie (MERGE\_SORT) oraz sortowanie oparte na strukturze kopca (HEAP\_SORT).
+
+
+\section{Opis Algorytmów}
+
+\subsection{INSERTION\_SORT}
+\subsubsection{opis}
+Iteracyjnie pobiera kolejne elementy i wstawia je w odpowiednie miejsce w części już posortowanej, dobra dla prawie posortowanych danych.
+\subsubsection{modyfikacja}
+Zamiast wstawiać pojedynczy element, pobierane są dwa kolejne elementy,
+najpierw są porównywane między sobą, a następnie wstawiane partią do odpowiednich pozycji.
+
+\subsubsection{złożoność}
+\begin{itemize}
+    \item $\mathcal{O}(n^2)$ (najgorszy przypadek)
+    \item $\mathcal{O}(n)$ (najlepszy przypadek)
+\end{itemize}
+
+\subsection{MERGE\_SORT}
+\subsubsection{opis}
+Dzieli dane na 2 części, sortuje rekurencyjnie i scala, stabilny. Zysk przy dużych danych, o ile implementacja scalania jest efektywna.
+\subsubsection{modyfikacja}
+Tablica dzielona jest na 3 podtablice, po czym scala się trzy posortowane ciągi. Liczba poziomów rekursji maleje, ale operacja scalania staje się bardziej kosztowna.
+\subsubsection{złożoność}
+\begin{itemize}
+\item $\mathcal{O}(n)$
+\item $O(n \log_{3} n)$ (modyfikacja)
+\end{itemize}
+
+\subsection{HEAP\_SORT}
+\subsubsection{opis}
+Buduje kopiec z danych, a następnie iteracyjnie usuwa element maksymalny (korzeń) i umieszcza go na końcu tablicy. Dzięki utrzymywaniu struktury kopca zapewnia stały czas dostępu do największego elementu.
+
+\subsubsection{modyfikacja}
+każdy węzeł ma 3 dzieci, co oznacza mniejsza wysokość kopca, równą $ \log_{3} n$. Jednak przy wybieraniu dziecka pojawia się więcej porównań
+
+\subsubsection{złożoność}
+\begin{itemize}
+    \item $\mathcal{O}(n \log(n))$ (gwarantowana)
+\end{itemize}
+
+\section{Pomiary}
+
+
+\begin{table}[!ht]
+\centering
+\small
+\caption{Liczba porównań (COMP) dla różnych algorytmów sortowania}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Algorytm} & \textbf{n = 7} & \textbf{n = 15} & \textbf{n = 100} & \textbf{n = 1000} \\ \hline
+\textbf{Insertion Sort} & 16 & 74 & 2615 & 121073 \\ \hline
+\textbf{Insertion Sort (mod.)} & 14 & 71 & 1831 & 81864 \\ \hline
+\textbf{Merge Sort} & 14 & 43 & 539 & 5693 \\ \hline
+\textbf{Merge Sort (mod.)} & 15 & 52 & 665 & 7001 \\ \hline
+\textbf{Heap Sort} & 19 & 69 & 1033 & 10956 \\ \hline
+\textbf{Heap Sort (mod.)} & 23 & 75 & 998 & 10675 \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\small
+\caption{Liczba przypisań (ASS) dla różnych algorytmów sortowania}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Algorytm} & \textbf{n = 7} & \textbf{n = 15} & \textbf{n = 100} & \textbf{n = 1000} \\ \hline
+\textbf{Insertion Sort} & 32 & 106 & 2817 & 122456 \\ \hline
+\textbf{Insertion Sort (mod.)} & 47 & 170 & 3758 & 164243 \\ \hline
+\textbf{Merge Sort} & 52 & 146 & 1542 & 14510 \\ \hline
+\textbf{Merge Sort (mod.)} & 40 & 114 & 1053 & 9372 \\ \hline
+\textbf{Heap Sort} & 42 & 135 & 1764 & 17730 \\ \hline
+\textbf{Heap Sort (mod.)} & 36 & 117 & 1224 & 12369 \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+\section{Wnioski}
+\begin{itemize}
+    \item \textbf{Insertion Sort} jest efektywny tylko dla bardzo małych zbiorów danych lub danych prawie posortowanych. Wraz ze wzrostem $n$ liczba porównań i przypisań rośnie bardzo szybko (dla $n=1000$ ponad $120$ tysięcy porównań). Modyfikacja wstawiająca dwa elementy jednocześnie pozwala ograniczyć liczbę porównań (ok. $30\%$ mniej niż klasyczna wersja), jednak odbywa się to kosztem większej liczby przypisań. Daje to korzyść jedynie w przypadkach, gdy dane są częściowo uporządkowane.
+
+    \item \textbf{Merge Sort} charakteryzuje się stabilnym i przewidywalnym wzrostem liczby operacji wraz z rozmiarem danych. Złożoność $O(n \log n)$ przekłada się na znacznie mniejszy wzrost liczby porównań i przypisań w porównaniu z algorytmami wstawiania. Modyfikacja dzieląca tablicę na trzy części zmniejsza głębokość rekursji i nieznacznie redukuje liczbę przypisań dla większych $n$, jednak zwiększa złożoność samej fazy scalania. Różnice są widoczne dopiero dla dużych tablic.
+
+    \item \textbf{Heap Sort} jest nieco mniej wydajny od Merge Sort, ale oferuje stałą złożoność pamięciową i brak potrzeby alokacji pomocniczych tablic. Wersja \textbf{trójkowa (modified)} zmniejsza wysokość kopca, co teoretycznie redukuje liczbę poziomów rekursji, lecz zwiększa koszt pojedynczego porównania w funkcji \texttt{HEAPIFY}. W efekcie liczba porównań jest nieco większa, a liczba przypisań mniejsza, co daje podobny całkowity koszt.
+
+    \item Ogólnie, \textbf{Merge Sort} i jego modyfikacja są najbardziej efektywne dla dużych zbiorów danych, natomiast \textbf{Insertion Sort} pozostaje najlepszy dla bardzo małych lub wstępnie uporządkowanych danych. \textbf{Heap Sort} plasuje się pomiędzy nimi pod względem wydajności. Najważniejszym czynnikiem wpływającym na rzeczywisty czas działania jest charakter danych wejściowych oraz koszty operacji pamięciowych i rekurencyjnych.
+\end{itemize}
+
+\end{document}
