@@ -6,9 +6,6 @@
 long long COMP = 0; // licznik porównań
 long long ASS  = 0; // licznik przypisań elementów (w tym swap=3)
 
-inline int LEFT(int i)  { return 2 * i + 1; }
-inline int RIGHT(int i) { return 2 * i + 2; }
-
 namespace vectors_1{
     std::vector<int> A7 = {7, 4, 5, 4, 2, 1, 9};
     // nie posortowana Lista wielkości n=7
@@ -56,6 +53,9 @@ void PRINT_VECTOR(std::vector<int>& A){
     std::cout <<'\n';
 }
 
+int LEFT(int i)  { return 2 * i + 1; }
+int RIGHT(int i) { return 2 * i + 2; }
+
 void HEAPIFY(std::vector<int>& A, int i, int heap_size){
     int l = LEFT(i);
     int r = RIGHT(i);
@@ -97,19 +97,72 @@ void HEAP_SORT(std::vector<int>& A){
     }
 }
 
+// --- kopiec trójarny: dzieci w 0-based ---
+int CHILD1(int i){ return 3*i + 1; }
+int CHILD2(int i){ return 3*i + 2; }
+int CHILD3(int i){ return 3*i + 3; }
+
+void HEAPIFY_MOD(std::vector<int>& A, int i, int heap_size){
+    int c1 = CHILD1(i);
+    int c2 = CHILD2(i);
+    int c3 = CHILD3(i);
+
+    int largest = i;
+
+    if (c1 < heap_size){                 
+        COMP++;
+        if (A[c1] > A[largest]) largest = c1;
+    }
+    if (c2 < heap_size){                 
+        COMP++;
+        if (A[c2] > A[largest]) largest = c2;
+    }
+    if (c3 < heap_size){                 
+        COMP++;
+        if (A[c3] > A[largest]) largest = c3;
+    }
+
+    if (largest != i){
+        std::swap(A[i], A[largest]); ASS += 3;
+        HEAPIFY_MOD(A, largest, heap_size);
+    }
+}
+
+void BUILD_HEAP_MOD(std::vector<int>& A){
+    int heap_size = (int)A.size();
+    for (int i = (heap_size - 2) / 3.0; i >= 0; --i){
+        HEAPIFY_MOD(A, i, heap_size);
+    }
+}
+
+
+void HEAP_SORT_MOD(std::vector<int>& A){
+    BUILD_HEAP_MOD(A);
+    int heap_size = (int)A.size();
+    for (int i = heap_size - 1; i >= 1; --i){
+        std::swap(A[0], A[i]); ASS += 3;                        
+        heap_size--;
+        HEAPIFY_MOD(A, 0, heap_size);
+    }
+}
+
 int main() {
     using namespace vectors_1;
 
     //HEAP_SORT(A7);
+    //HEAP_SORT_MOD(A7);
     //PRINT_VECTOR(A7);
 
     //HEAP_SORT(A15);
+    //HEAP_SORT_MOD(A15);
     //PRINT_VECTOR(A15);
 
-    HEAP_SORT(A100);
+    //HEAP_SORT(A100);
+    HEAP_SORT_MOD(A100);
     PRINT_VECTOR(A100);
 
     //HEAP_SORT(A1000);
+    //HEAP_SORT_MOD(A1000);
     //PRINT_VECTOR(A1000);
 
     std::cout << "\nCOMP = " << COMP << "\nASS  = " << ASS << "\n";

@@ -52,40 +52,91 @@ void PRINT_VECTOR(std::vector<int>& A){
 }
 
 void INSERTION_SORT(std::vector<int>& A){
-    int n = A.size();
+    int n = A.size(); ASS++;
     for(int i = 1; i < n; i++){
-        int x = A[i];
-        ASS++;                      
-
-        int j = i - 1;
+        int x = A[i]; ASS++;                      
+        int j = i - 1; ASS++;
         while(j >= 0){
             COMP++;                 
             if(A[j] > x){
-                A[j + 1] = A[j];
-                ASS++;             
+                A[j + 1] = A[j]; ASS++;             
                 j = j - 1;
             }
             else break;
         }
-        A[j + 1] = x;
-        ASS++;                      
+        A[j + 1] = x; ASS++;                      
+    }
+}
+
+void INSERTION_SORT_MOD(std::vector<int>& A){
+    int n = A.size(); ASS++;   
+
+    for (int i = 1; i < n; i = i + 2){
+        int x = A[i - 1]; ASS++;   
+        int y = A[i];     ASS++;   
+
+        // sprawdzamy czy x < y
+        COMP++;
+        if (x > y) std::swap(x, y), ASS+=3;
+
+        int j = i - 2; ASS++;  
+
+        // najpierw wstawiamy y > x
+        while (j >= 0){
+            COMP++; 
+            if (A[j] > y){
+                A[j + 2] = A[j]; ASS++;
+                j = j - 1; ASS++; 
+            } else break;
+        }
+        A[j + 1] = y; ASS++;
+
+        // teraz x – zaczynamy od j + 1, bo wiemy że y > x
+        int k = j + 1; ASS++;  
+        while (k >= 0){
+            COMP++;
+            if (A[k] > x){
+                A[k + 1] = A[k]; ASS++;
+                k = k - 1; ASS++;
+            } else break;
+        }
+        A[k + 1] = x; ASS++;
+    }
+
+    // jezeli n jest nieparzyste to zostaje 1 element nieposortowany na koncu
+    if (n % 2 == 1){
+        int z = A[n - 1]; ASS++;
+        int j = n - 2; ASS++;
+        while (j >= 0){
+            COMP++;
+            if (A[j] > z){
+                A[j + 1] = A[j]; ASS++;
+                j = j - 1; ASS++;
+            } else break;
+        }
+        A[j + 1] = z; ASS++;
     }
 }
 
 int main(){
     using namespace vectors_1;
 
-    INSERTION_SORT(A7);
-    PRINT_VECTOR(A7);
+    //INSERTION_SORT(A7);
+    //INSERTION_SORT_MOD(A7);
+    //PRINT_VECTOR(A7);
 
-    INSERTION_SORT(A15);
+    //INSERTION_SORT(A15);
+    INSERTION_SORT_MOD(A15);
     PRINT_VECTOR(A15);
 
-    INSERTION_SORT(A100);
-    PRINT_VECTOR(A100);
 
-    INSERTION_SORT(A1000);
-    PRINT_VECTOR(A1000);
+    //INSERTION_SORT(A100);
+    //INSERTION_SORT_MOD(A100);
+    //PRINT_VECTOR(A100);
+
+    //INSERTION_SORT(A1000);
+    //INSERTION_SORT_MOD(A1000);
+    //PRINT_VECTOR(A1000);
 
     std::cout << "\nCOMP = " << COMP << "\nASS  = " << ASS << "\n";
 
