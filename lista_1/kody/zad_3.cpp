@@ -48,6 +48,9 @@ namespace vectors_1{
 // nie posortowana Lista wielkości n=1000
 }
 
+void RESET_COMP_ASS(){COMP = 0; ASS = 0;}
+void PRINT_COMP_ASS(){std::cout << "\nCOMP = " << COMP << " ASS  = " << ASS << "\n"; RESET_COMP_ASS();}
+
 void PRINT_VECTOR(std::vector<int>& A){
     for (int x : A) std::cout << x << " ";
     std::cout <<'\n';
@@ -97,7 +100,7 @@ void HEAP_SORT(std::vector<int>& A){
     }
 }
 
-// --- kopiec trójarny: dzieci w 0-based ---
+// kopiec trójarny
 int CHILD1(int i){ return 3*i + 1; }
 int CHILD2(int i){ return 3*i + 2; }
 int CHILD3(int i){ return 3*i + 3; }
@@ -150,21 +153,24 @@ int main() {
     using namespace vectors_1;
 
     //HEAP_SORT(A7);
-    //HEAP_SORT_MOD(A7);
+    HEAP_SORT_MOD(A7);
     //PRINT_VECTOR(A7);
+    PRINT_COMP_ASS();
 
     //HEAP_SORT(A15);
-    //HEAP_SORT_MOD(A15);
+    HEAP_SORT_MOD(A15);
     //PRINT_VECTOR(A15);
+    PRINT_COMP_ASS();
 
     //HEAP_SORT(A100);
     HEAP_SORT_MOD(A100);
-    PRINT_VECTOR(A100);
+    //PRINT_VECTOR(A100);
+    PRINT_COMP_ASS();
 
     //HEAP_SORT(A1000);
-    //HEAP_SORT_MOD(A1000);
+    HEAP_SORT_MOD(A1000);
     //PRINT_VECTOR(A1000);
-
-    std::cout << "\nCOMP = " << COMP << "\nASS  = " << ASS << "\n";
+    PRINT_COMP_ASS();
+    
     return 0;
 }

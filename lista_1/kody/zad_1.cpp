@@ -46,12 +46,16 @@ namespace vectors_1{
 // nie posortowana Lista wielkości n=1000
 }
 
+void RESET_COMP_ASS(){COMP = 0; ASS = 0;}
+void PRINT_COMP_ASS(){std::cout << "\nCOMP = " << COMP << " ASS  = " << ASS << "\n";}
+
 void PRINT_VECTOR(std::vector<int>& A){
     for (int x : A) std::cout << x << " ";
     std::cout <<'\n';
 }
 
 void INSERTION_SORT(std::vector<int>& A){
+    RESET_COMP_ASS();
     int n = A.size(); ASS++;
     for(int i = 1; i < n; i++){
         int x = A[i]; ASS++;                      
@@ -69,6 +73,8 @@ void INSERTION_SORT(std::vector<int>& A){
 }
 
 void INSERTION_SORT_MOD(std::vector<int>& A){
+    RESET_COMP_ASS();
+
     int n = A.size(); ASS++;   
 
     for (int i = 1; i < n; i = i + 2){
@@ -121,24 +127,28 @@ void INSERTION_SORT_MOD(std::vector<int>& A){
 int main(){
     using namespace vectors_1;
 
+
     //INSERTION_SORT(A7);
-    //INSERTION_SORT_MOD(A7);
+    INSERTION_SORT_MOD(A7);
     //PRINT_VECTOR(A7);
+    PRINT_COMP_ASS();
 
     //INSERTION_SORT(A15);
     INSERTION_SORT_MOD(A15);
-    PRINT_VECTOR(A15);
+    //PRINT_VECTOR(A15);
+    PRINT_COMP_ASS();
 
 
     //INSERTION_SORT(A100);
-    //INSERTION_SORT_MOD(A100);
+    INSERTION_SORT_MOD(A100);
     //PRINT_VECTOR(A100);
+    PRINT_COMP_ASS();
 
     //INSERTION_SORT(A1000);
-    //INSERTION_SORT_MOD(A1000);
+    INSERTION_SORT_MOD(A1000);
     //PRINT_VECTOR(A1000);
+    PRINT_COMP_ASS();
 
-    std::cout << "\nCOMP = " << COMP << "\nASS  = " << ASS << "\n";
 
     return 0;
 }

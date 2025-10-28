@@ -47,6 +47,9 @@ namespace vectors_1{
 // nie posortowana Lista wielkości n=1000
 }
 
+void RESET_COMP_ASS(){COMP = 0; ASS = 0;}
+void PRINT_COMP_ASS(){std::cout << "\nCOMP = " << COMP << " ASS  = " << ASS << "\n"; RESET_COMP_ASS();}
+
 void PRINT_VECTOR(std::vector<int>& A){
     for (int x : A) std::cout << x << " ";
     std::cout <<'\n';
@@ -171,23 +174,25 @@ void MERGE_SORT_MOD(std::vector<int>& A, int p, int k){
 int main() {
     using namespace vectors_1;
 
-    MERGE_SORT(A7, 0, (int)A7.size() - 1);
+    //MERGE_SORT(A7, 0, (int)A7.size() - 1);
     MERGE_SORT_MOD(A7, 0, (int)A7.size() - 1);
-    PRINT_VECTOR(A7);
+    //PRINT_VECTOR(A7);
+    PRINT_COMP_ASS();
 
-    MERGE_SORT(A15, 0, (int)A15.size() - 1);
+    //MERGE_SORT(A15, 0, (int)A15.size() - 1);
     MERGE_SORT_MOD(A15, 0, (int)A15.size() - 1);
-    PRINT_VECTOR(A15);
+    //PRINT_VECTOR(A15);
+    PRINT_COMP_ASS();
 
-    MERGE_SORT(A100, 0, (int)A100.size() - 1);
-    MERGE_SORT_MOD(A100, 0, (int)A1000.size() - 1);
-    PRINT_VECTOR(A100);
+    //MERGE_SORT(A100, 0, (int)A100.size() - 1);
+    MERGE_SORT_MOD(A100, 0, (int)A100.size() - 1);
+    //PRINT_VECTOR(A100);
+    PRINT_COMP_ASS();
 
-    MERGE_SORT(A1000, 0, (int)A1000.size() - 1);
+    //MERGE_SORT(A1000, 0, (int)A1000.size() - 1);
     MERGE_SORT_MOD(A1000, 0, (int)A1000.size() - 1);
-    PRINT_VECTOR(A1000);
-
-
-    std::cout << "\nCOMP = " << COMP << "\nASS  = " << ASS << "\n";
+    //PRINT_VECTOR(A1000);
+    PRINT_COMP_ASS();
+    
     return 0;
 }
